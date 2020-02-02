@@ -1,0 +1,33 @@
+<div class="container">
+    <button [disabled]="connected" (click)="connect()" class="btn btn-primary tweet">
+        Connect</button>
+    <div id="box">    
+        <div class="bottom container">
+            <textarea maxlength="50" (keydown)="changeCharLeft()" placeholder="What's happening?" [(ngModel)]="msg"></textarea>
+            <div class="row">        
+                <div class="bottom-right">
+                    <span id='countdown'> {{charLeft}}</span>
+                    <button (click)="onTweet()" class="btn btn-primary tweet">
+                    Tweet</button>
+                </div> 
+            </div>
+        </div> 
+    </div>
+  <div class="message-container">
+      <ng-container *ngFor="let tweet of tweets">
+        <ng-container *ngIf="tweet.id=='ng';else reactTweet">
+            <div class="chat-container">
+                <img src="https://plugins.jetbrains.com/files/6971/preview_13184.png" alt="Avatar">
+                <p>{{tweet.msg}}</p>
+            </div>
+        </ng-container>
+        <ng-template #reactTweet>
+            <div class="chat-container darker">
+                <img src="https://webologixglobal.com/wp-content/uploads/2019/08/react-native-300x300.png" alt="Avatar" class="right">
+                <p>{{tweet.msg}}</p>
+            </div>
+        </ng-template>
+      </ng-container>
+  </div>
+</div>
+  

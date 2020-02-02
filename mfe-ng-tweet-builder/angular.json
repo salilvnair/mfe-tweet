@@ -1,0 +1,163 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "mfe-ng-tweet": {
+      "projectType": "library",
+      "root": "projects/mfe-ng-tweet",
+      "sourceRoot": "projects/mfe-ng-tweet/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/mfe-ng-tweet/tsconfig.lib.json",
+            "project": "projects/mfe-ng-tweet/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/mfe-ng-tweet/src/test.ts",
+            "tsConfig": "projects/mfe-ng-tweet/tsconfig.spec.json",
+            "karmaConfig": "projects/mfe-ng-tweet/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/mfe-ng-tweet/tsconfig.lib.json",
+              "projects/mfe-ng-tweet/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "mfe-ng-tweet-app": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/mfe-ng-tweet-app",
+      "sourceRoot": "projects/mfe-ng-tweet-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+            "customWebpackConfig": {
+              "path": "projects/mfe-ng-tweet-app/custom-webpack.config.js",
+              "mergeStrategies": { "externals": "replace" }
+            },
+            "outputPath": "dist/mfe-ng-tweet-app",
+            "index": "projects/mfe-ng-tweet-app/src/index.html",
+            "main": "projects/mfe-ng-tweet-app/src/main.ts",
+            "polyfills": "projects/mfe-ng-tweet-app/src/polyfills.ts",
+            "tsConfig": "projects/mfe-ng-tweet-app/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/mfe-ng-tweet-app/src/favicon.ico",
+              "projects/mfe-ng-tweet-app/src/assets"
+            ],
+            "styles": [
+              "projects/mfe-ng-tweet-app/src/styles.css"
+            ],
+            "scripts": [
+              {
+                "input": "node_modules/document-register-element/build/document-register-element.js"
+              }
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/mfe-ng-tweet-app/src/environments/environment.ts",
+                  "with": "projects/mfe-ng-tweet-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "mfe-ng-tweet-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "mfe-ng-tweet-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "mfe-ng-tweet-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/mfe-ng-tweet-app/src/test.ts",
+            "polyfills": "projects/mfe-ng-tweet-app/src/polyfills.ts",
+            "tsConfig": "projects/mfe-ng-tweet-app/tsconfig.spec.json",
+            "karmaConfig": "projects/mfe-ng-tweet-app/karma.conf.js",
+            "assets": [
+              "projects/mfe-ng-tweet-app/src/favicon.ico",
+              "projects/mfe-ng-tweet-app/src/assets"
+            ],
+            "styles": [
+              "projects/mfe-ng-tweet-app/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/mfe-ng-tweet-app/tsconfig.app.json",
+              "projects/mfe-ng-tweet-app/tsconfig.spec.json",
+              "projects/mfe-ng-tweet-app/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/mfe-ng-tweet-app/e2e/protractor.conf.js",
+            "devServerTarget": "mfe-ng-tweet-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mfe-ng-tweet-app:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "mfe-ng-tweet"
+}
