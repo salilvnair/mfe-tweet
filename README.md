@@ -27,6 +27,16 @@
 	
 > NOTE: angular app uses webpack by default so if we have multiple mfe built using webpack 
   then there is a known bug to avoid it install angular custom webpack.
+  
+  Multiple Angular Elements from different scripts, The feature to have multiple angular micro apps on the same page is currently not supported.
+  which in turn gives exception below:
+  
+  ```
+  DOMException: Failed to execute 'define' on 'CustomElementRegistry': this name has already been used with this registry
+at CustomElementRegistry.define (http://172.27.147.64:8080/node_modules/document-register-element/build/document-register-element.js:2:18538)
+at new AppModule (http://172.27.147.64:8080/dist/weather-widget/main.js:115:24)
+```
+
 
 step 1: 
 	npm install @angular-builders/custom-webpack --save-dev
